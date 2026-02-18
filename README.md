@@ -12,6 +12,11 @@
     - **Play/Pause, Exit, Restart, Jump to End**.
     - **Progress bar for tracking playback status**.
 - **Redesigned UI**: Modern and user-friendly interface for enhanced usability.
+- **Web Scraper Utility**: Built-in web scraper for fetching and parsing data from web sources.
+    - Asynchronous web scraping with OkHttp
+    - HTML parsing with JSoup
+    - CSS selector support for targeted data extraction
+    - See [WEBSCRAPER_README.md](WEBSCRAPER_README.md) for detailed usage
 
 ## Requirements
 
