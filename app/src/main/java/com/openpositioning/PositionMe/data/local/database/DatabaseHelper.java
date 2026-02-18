@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,11 +23,13 @@ public class DatabaseHelper {
     private final AdmissionDatabase database;
     private final ExecutorService executorService;
     private final Handler mainHandler;
+    private final Random random;
 
     public DatabaseHelper(Context context) {
         this.database = AdmissionDatabase.getInstance(context);
         this.executorService = Executors.newSingleThreadExecutor();
         this.mainHandler = new Handler(Looper.getMainLooper());
+        this.random = new Random(12345); // Seeded random for reproducible sample data
     }
 
     /**
@@ -93,13 +96,14 @@ public class DatabaseHelper {
                         University uni = database.universityDao().getUniversityById(major.getUniversityId());
                         int baseScore = getBaseScoreForUniversity(uni.getUniversityType(), year);
                         
-                        int minScore = baseScore + (int)(Math.random() * 20);
-                        int maxScore = minScore + (int)(Math.random() * 30) + 20;
+                        int minScore = baseScore + random.nextInt(20);
+                        int maxScore = minScore + random.nextInt(30) + 20;
                         int avgScore = (minScore + maxScore) / 2;
-                        int rankMin = 5000 + (int)(Math.random() * 10000);
-                        int rankMax = rankMin + (int)(Math.random() * 5000) + 2000;
-                        int planned = 30 + (int)(Math.random() * 50);
-                        int actual = planned + (int)(Math.random() * 5) - 2;
+                        int rankMin = 5000 + random.nextInt(10000);
+                        int rankMax = rankMin + random.nextInt(5000) + 2000;
+                        int planned = 30 + random.nextInt(50);
+                        // Ensure actual enrollment is between planned-2 and planned+2, but never negative
+                        int actual = Math.max(planned - 2, Math.min(planned + 2, planned + random.nextInt(5) - 2));
 
                         scores.add(new AdmissionScore(
                                 major.getUniversityId(),

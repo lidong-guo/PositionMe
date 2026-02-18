@@ -319,45 +319,52 @@ public class AdmissionDatabaseExample {
     }
 
     /**
-     * Run all examples in sequence
+     * Run all examples in sequence with proper callback chaining
      */
     public void runAllExamples(Context context) {
         Log.d(TAG, "========================================");
         Log.d(TAG, "Running all database examples...");
         Log.d(TAG, "========================================");
         
-        // Example 1: Initialize with sample data
-        exampleInitializeDatabase();
-        
-        // Wait a bit for data to be inserted
-        new Thread(() -> {
-            try {
-                Thread.sleep(2000); // Wait 2 seconds
+        // Example 1: Initialize with sample data, then chain other examples
+        helper.insertSampleData(new DatabaseHelper.DatabaseCallback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                Log.d(TAG, "✓ Database initialized successfully!");
                 
-                // Example 2: Show stats (already called in Example 1)
-                
-                // Example 3: Query by year
-                exampleQueryByYear(2024);
-                
-                Thread.sleep(1000);
-                
-                // Example 4: Search majors
-                exampleSearchMajors("计算机");
-                
-                Thread.sleep(1000);
-                
-                // Example 5: Direct database access
-                exampleDirectDatabaseAccess(context);
-                
-                Thread.sleep(1000);
-                
-                // Example 7: Query by score range
-                exampleQueryByScoreRange(context, 550, 600);
-                
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                // Example 2: Show stats
+                helper.getDatabaseStats(new DatabaseHelper.DatabaseCallback<String>() {
+                    @Override
+                    public void onSuccess(String stats) {
+                        Log.d(TAG, "=== 数据库统计信息 ===");
+                        Log.d(TAG, stats);
+                        Log.d(TAG, "====================");
+                        
+                        // Example 3: Query by year
+                        exampleQueryByYear(2024);
+                        
+                        // Example 4: Search majors
+                        exampleSearchMajors("计算机");
+                        
+                        // Example 5: Direct database access
+                        exampleDirectDatabaseAccess(context);
+                        
+                        // Example 7: Query by score range
+                        exampleQueryByScoreRange(context, 550, 600);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e(TAG, "Error getting stats", e);
+                    }
+                });
             }
-        }).start();
+
+            @Override
+            public void onError(Exception e) {
+                Log.e(TAG, "✗ Failed to initialize database", e);
+            }
+        });
     }
 
     /**
