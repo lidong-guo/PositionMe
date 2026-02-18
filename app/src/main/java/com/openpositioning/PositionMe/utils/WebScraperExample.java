@@ -131,11 +131,10 @@ public class WebScraperExample {
      * Demonstrates batch scraping of multiple pages.
      */
     public void exampleScrapeMultiple() {
-        List<String> urls = List.of(
-                "https://example.com/page1",
-                "https://example.com/page2",
-                "https://example.com/page3"
-        );
+        List<String> urls = new ArrayList<>();
+        urls.add("https://example.com/page1");
+        urls.add("https://example.com/page2");
+        urls.add("https://example.com/page3");
         
         scraper.scrapeMultiple(urls, new WebScraper.MultiScraperListener() {
             @Override

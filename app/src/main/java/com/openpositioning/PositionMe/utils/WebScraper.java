@@ -39,6 +39,7 @@ import okhttp3.ResponseBody;
  */
 public class WebScraper {
     private static final String TAG = "WebScraper";
+    private static final int DEFAULT_THREAD_POOL_SIZE = 3;
     private final OkHttpClient client;
     private final ExecutorService executorService;
     private final Handler mainHandler;
@@ -161,7 +162,7 @@ public class WebScraper {
                 .followRedirects(true)
                 .followSslRedirects(true)
                 .build();
-        this.executorService = Executors.newFixedThreadPool(3);
+        this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
         this.mainHandler = new Handler(Looper.getMainLooper());
     }
 
@@ -171,7 +172,7 @@ public class WebScraper {
      */
     public WebScraper(OkHttpClient client) {
         this.client = client;
-        this.executorService = Executors.newFixedThreadPool(3);
+        this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
         this.mainHandler = new Handler(Looper.getMainLooper());
     }
 
