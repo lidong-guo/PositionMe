@@ -17,6 +17,12 @@
     - HTML parsing with JSoup
     - CSS selector support for targeted data extraction
     - See [WEBSCRAPER_README.md](WEBSCRAPER_README.md) for detailed usage
+- **University Admission Score Database**: Comprehensive database system for managing university admission data.
+    - Room database for storing admission scores
+    - Data for Hebei Province physics group (物理组) over 3 years
+    - Complete CRUD operations with DAO interfaces
+    - Sample data for 10 major universities
+    - See [ADMISSION_DATABASE_README.md](ADMISSION_DATABASE_README.md) for detailed usage
 
 ## Requirements
 
