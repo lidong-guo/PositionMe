@@ -2,6 +2,7 @@ package com.openpositioning.PositionMe.utils;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -173,10 +174,15 @@ public class WebScraperExample {
                 List<String> downloadLinks = result.extractAttributeBySelector("a.download-link", "href");
                 
                 Log.d(TAG, "Found " + trajectoryIds.size() + " trajectories");
-                for (int i = 0; i < trajectoryIds.size(); i++) {
-                    if (i < timestamps.size()) {
-                        Log.d(TAG, "Trajectory " + trajectoryIds.get(i) + " - " + timestamps.get(i));
-                    }
+                // Only iterate up to the minimum size to avoid index out of bounds
+                int minSize = Math.min(trajectoryIds.size(), timestamps.size());
+                for (int i = 0; i < minSize; i++) {
+                    Log.d(TAG, "Trajectory " + trajectoryIds.get(i) + " - " + timestamps.get(i));
+                }
+                
+                // Log a warning if data sizes don't match
+                if (trajectoryIds.size() != timestamps.size()) {
+                    Log.w(TAG, "Warning: trajectory IDs and timestamps count mismatch");
                 }
                 
                 Log.d(TAG, "Found " + downloadLinks.size() + " download links");
