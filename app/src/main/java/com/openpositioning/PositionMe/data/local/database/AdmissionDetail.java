@@ -3,6 +3,9 @@ package com.openpositioning.PositionMe.data.local.database;
 /**
  * Data model class representing detailed admission information.
  * This combines data from University, Major, and AdmissionScore tables.
+ * 
+ * <p>Note: This class is immutable by design (no setters) as it represents
+ * a snapshot of combined query results that should not be modified after creation.</p>
  *
  * @author PositionMe Team
  */

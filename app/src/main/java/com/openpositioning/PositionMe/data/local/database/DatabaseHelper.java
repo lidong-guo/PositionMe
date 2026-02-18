@@ -102,8 +102,11 @@ public class DatabaseHelper {
                         int rankMin = 5000 + random.nextInt(10000);
                         int rankMax = rankMin + random.nextInt(5000) + 2000;
                         int planned = 30 + random.nextInt(50);
-                        // Ensure actual enrollment is between planned-2 and planned+2, but never negative
-                        int actual = Math.max(planned - 2, Math.min(planned + 2, planned + random.nextInt(5) - 2));
+                        
+                        // Calculate actual enrollment: typically within 2 of planned enrollment
+                        // Ensure it's between (planned-2) and (planned+2), and never negative
+                        int enrollmentVariation = random.nextInt(5) - 2; // Range: -2 to 2
+                        int actual = Math.max(0, Math.max(planned - 2, Math.min(planned + 2, planned + enrollmentVariation)));
 
                         scores.add(new AdmissionScore(
                                 major.getUniversityId(),
