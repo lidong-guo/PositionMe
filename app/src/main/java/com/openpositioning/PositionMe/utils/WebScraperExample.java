@@ -175,7 +175,7 @@ public class WebScraperExample {
                 
                 Log.d(TAG, "Found " + trajectoryIds.size() + " trajectories");
                 for (int i = 0; i < trajectoryIds.size(); i++) {
-                    if (i < trajectoryIds.size() && i < timestamps.size()) {
+                    if (i < timestamps.size()) {
                         Log.d(TAG, "Trajectory " + trajectoryIds.get(i) + " - " + timestamps.get(i));
                     }
                 }
